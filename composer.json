@@ -1,0 +1,31 @@
+{
+    "name": "nickwhitt/gridcoin",
+    "description": "Laravel Gridcoin Package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nick Whitt",
+            "email": "nick.whitt@protonmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^6.5",
+        "illuminate/support": "^7.13",
+        "ramsey/uuid": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "NickWhitt\\Gridcoin\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "NickWhitt\\Gridcoin\\ServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
