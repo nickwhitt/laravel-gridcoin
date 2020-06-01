@@ -42,7 +42,7 @@ class FollowBlock implements ShouldQueue
             return;
         }
 
-        $response = resolve(RpcClient::class)->getblock($hash);
+        $response = app(RpcClient::class)->getblock($hash);
         if (is_null($response->result)) {
             Log::error("Server error for $hash: $response->error");
             return;
