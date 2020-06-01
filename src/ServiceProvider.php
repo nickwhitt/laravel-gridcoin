@@ -4,6 +4,7 @@ namespace NickWhitt\Gridcoin;
 
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
+use NickWhitt\Gridcoin\Console\StoreBlock;
 
 class ServiceProvider extends LaravelServiceProvider implements DeferrableProvider
 {
@@ -14,6 +15,13 @@ class ServiceProvider extends LaravelServiceProvider implements DeferrableProvid
         ]);
 
         $this->mergeConfigFrom(__DIR__.'/../config/gridcoin.php', 'gridcoin');
+        $this->loadMigrationsFrom(__DIR__.'/../migrations');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                StoreBlock::class,
+            ]);
+        }
     }
 
     public function register()
