@@ -16,6 +16,7 @@ class CreateBlocksTable extends Migration
         Schema::create('blocks', function (Blueprint $table) {
             $table->id();
             $table->char('hash', 64)->index();
+            $table->unsignedInteger('height');
             $table->float('mint');
             $table->timestamp('time')->index();
             $table->float('difficulty');
