@@ -17,12 +17,12 @@ class CreateBlocksTable extends Migration
             $table->id();
             $table->char('hash', 64)->index();
             $table->unsignedInteger('height');
-            $table->float('mint');
-            $table->timestamp('time')->index();
-            $table->float('difficulty');
+            $table->double('mint');
+            $table->timestamp('time')->nullable()->index();
+            $table->double('difficulty');
             $table->char('cpid', 32)->nullable()->index();
-            $table->float('interest')->nullable();
-            $table->float('researchsubsidy')->nullable();
+            $table->double('interest')->nullable();
+            $table->double('researchsubsidy')->nullable();
             $table->char('previousblockhash', 64)->nullable();
             $table->char('nextblockhash', 64)->nullable();
             $table->char('lastporblockhash', 64)->nullable();
