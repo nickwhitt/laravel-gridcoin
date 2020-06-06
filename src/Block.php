@@ -11,7 +11,7 @@ class Block extends Model
 
     public static function storeClientResponse($result)
     {
-        return static::firstOrCreate(['hash' => $result->hash], [
+        return static::updateOrCreate(['hash' => $result->hash], [
             'height' => $result->height,
             'mint' => $result->mint,
             'time' => $result->time,

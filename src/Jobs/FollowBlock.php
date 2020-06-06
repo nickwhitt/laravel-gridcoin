@@ -38,10 +38,6 @@ class FollowBlock implements ShouldQueue
             return;
         }
 
-        if (Block::where('hash', $hash)->exists()) {
-            return;
-        }
-
         $response = app(RpcClient::class)->getblock($hash);
         if (is_null($response->result)) {
             Log::error("Server error for $hash: $response->error");
@@ -49,8 +45,10 @@ class FollowBlock implements ShouldQueue
         }
 
         $block = Block::storeClientResponse($response->result);
-        Log::info("New block stored $hash");
+        Log::info("Stored block $hash");
 
-        dispatch(new static($block));
+        if ($block->wasRecentlyCreated || $block->wasChanged()) {
+            dispatch(new static($block));
+        }
     }
 }
