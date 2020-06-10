@@ -1,0 +1,9 @@
+version: "3.8"
+services:
+
+  gridcoin:
+    build: .
+    volumes:
+      - ./data:/root/.GridcoinResearch
+    ports:
+      - 15715:15715
