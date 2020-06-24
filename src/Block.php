@@ -14,6 +14,7 @@ class Block extends Model
         return static::updateOrCreate(['hash' => $result->hash], [
             'height' => $result->height,
             'mint' => $result->mint,
+            'moneysupply' => $result->MoneySupply,
             'time' => $result->time,
             'difficulty' => $result->difficulty,
             'cpid' => $result->CPID,

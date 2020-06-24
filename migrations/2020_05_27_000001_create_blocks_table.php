@@ -18,6 +18,7 @@ class CreateBlocksTable extends Migration
             $table->char('hash', 64)->index();
             $table->unsignedInteger('height');
             $table->double('mint');
+            $table->unsignedBigInteger('moneysupply');
             $table->timestamp('time')->nullable()->index();
             $table->double('difficulty');
             $table->char('cpid', 32)->nullable()->index();
