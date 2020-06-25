@@ -22,6 +22,7 @@ class CreateBlocksTable extends Migration
             $table->timestamp('time')->nullable()->index();
             $table->double('difficulty');
             $table->char('cpid', 32)->nullable()->index();
+            $table->char('grcaddress', 34)->nullable()->index();
             $table->double('interest')->nullable();
             $table->double('researchsubsidy')->nullable();
             $table->char('previousblockhash', 64)->nullable();

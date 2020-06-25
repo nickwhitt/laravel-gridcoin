@@ -23,6 +23,7 @@ class Block extends Model
             'time' => $result->time,
             'difficulty' => $result->difficulty,
             'cpid' => $result->CPID,
+            'grcaddress' => $result->GRCAddress,
             'interest' => $result->Interest,
             'researchsubsidy' => $result->ResearchSubsidy,
             'previousblockhash' => $result->previousblockhash ?? null,

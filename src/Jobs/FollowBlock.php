@@ -6,9 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 use NickWhitt\Gridcoin\Block;
-use NickWhitt\Gridcoin\RpcClient;
 
 class FollowBlock implements ShouldQueue
 {
@@ -27,28 +25,8 @@ class FollowBlock implements ShouldQueue
             $this->block->previousblockhash,
             $this->block->nextblockhash,
             $this->block->lastporblockhash
-        ])->each(
-            fn($hash) => $this->storeAndFollow($hash)
+        ])->filter()->each(
+            fn($hash) => dispatch(new StoreBlock($hash))
         );
-    }
-
-    protected function storeAndFollow($hash)
-    {
-        if (is_null($hash)) {
-            return;
-        }
-
-        $response = app(RpcClient::class)->getblock($hash);
-        if (is_null($response->result)) {
-            Log::error("Server error for $hash: $response->error");
-            return;
-        }
-
-        $block = Block::storeClientResponse($response->result);
-        Log::info("Stored block $hash");
-
-        if ($block->wasRecentlyCreated || $block->wasChanged()) {
-            dispatch(new static($block));
-        }
     }
 }

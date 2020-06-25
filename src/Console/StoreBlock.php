@@ -3,9 +3,7 @@
 namespace NickWhitt\Gridcoin\Console;
 
 use Illuminate\Console\Command;
-use NickWhitt\Gridcoin\Block;
-use NickWhitt\Gridcoin\Jobs\FollowBlock;
-use NickWhitt\Gridcoin\Jobs\StoreTransaction;
+use NickWhitt\Gridcoin\Jobs\StoreBlock as StoreBlockJob;
 use NickWhitt\Gridcoin\RpcClient;
 
 class StoreBlock extends Command
@@ -20,21 +18,6 @@ class StoreBlock extends Command
             return $this->error('Hash required');
         }
 
-        $response = $client->getblock($hash);
-        if (!is_null($response->error)) {
-            return $this->error($response->error->message);
-        }
-
-        $block = Block::storeClientResponse($response->result);
-
-        collect($response->result->tx)->each(
-            fn($tx) => dispatch(new StoreTransaction($tx))
-        );
-
-        if ($this->option('no-follow')) {
-            return;
-        }
-
-        dispatch(new FollowBlock($block));
+        dispatch(new StoreBlockJob($hash));
     }
 }

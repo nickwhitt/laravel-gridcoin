@@ -18,6 +18,7 @@ class CreateTxOutsTable extends Migration
             $table->char('txid', 64)->index();
             $table->integer('index');
             $table->double('value')->nullable();
+            $table->char('address', 34)->nullable()->index();
             $table->char('input', 64)->nullable()->index();
             $table->timestamps();
         });
