@@ -5,6 +5,7 @@ namespace NickWhitt\Gridcoin\Console;
 use Illuminate\Console\Command;
 use NickWhitt\Gridcoin\Block;
 use NickWhitt\Gridcoin\Jobs\FollowBlock;
+use NickWhitt\Gridcoin\Jobs\StoreTransaction;
 use NickWhitt\Gridcoin\RpcClient;
 
 class StoreBlock extends Command
@@ -25,6 +26,10 @@ class StoreBlock extends Command
         }
 
         $block = Block::storeClientResponse($response->result);
+
+        collect($response->result->tx)->each(
+            fn($tx) => dispatch(new StoreTransaction($tx))
+        );
 
         if ($this->option('no-follow')) {
             return;

@@ -9,6 +9,11 @@ class Block extends Model
     protected $dates = ['time'];
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'blockhash', 'hash');
+    }
+
     public static function storeClientResponse($result)
     {
         return static::updateOrCreate(['hash' => $result->hash], [

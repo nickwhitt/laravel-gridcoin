@@ -42,6 +42,11 @@ class RpcClient
         return $this->request('getblock', [$hash]);
     }
 
+    public function getTransaction($hash)
+    {
+        return $this->request('gettransaction', [$hash]);
+    }
+
     public function request($method, array $params=[])
     {
         $this->response = $this->client->post('/', ['http_errors' => false, 'json' => [
